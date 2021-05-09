@@ -1,3 +1,10 @@
-.text-center {
+/* .text-center {
   text-align: center;
+} */
+.search-container {
+  flex-direction: column;
+}
+
+#search-bar {
+  display: inline-block;
 }
