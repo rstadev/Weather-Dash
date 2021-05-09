@@ -8,3 +8,12 @@
 #search-bar {
   display: inline-block;
 }
+
+.border {
+  border: 1px solid;
+}
+
+#city-name {
+  padding: 10px;
+  font-weight: bold;
+}
