@@ -21,13 +21,13 @@
   <main class="container">
     <div class="row">
       <div class="col-4">
-        <div class="search-container col-10">
+        <form class="search-container col-10" id= "city-search">
           <h3>Search your city!</h3>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Enter a city" aria-label="Enter a city"
               aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Search</button>
+              <button class="btn btn-outline-secondary" id= "search-button" type="button">Search</button>
             </div>
           </div>
           <div class="list-group">
@@ -37,10 +37,10 @@
             <a href="#" class="list-group-item list-group-item-action">Example Search 4</a>
             <a href="#" class="list-group-item list-group-item-action">Example Search 5</a>
           </div>
-        </div>
+        </form>
       </div>
       <div class="col-8">
-        <div class="col-10 border">
+        <div class="col-10 border" id="current-weather-info">
           <div class="col" id="city-name">
             <span id="place" class="align-middle">New York Example
             </span>
