@@ -17,7 +17,7 @@ function currentWeather(name) {
   let city = name;
   // console.log(city)
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
-    name + "&appid=" + APIkey;
+    name + "&units=imperial" + "&appid=" + APIkey;
   fetch(queryURL)
   .then((response) => {
     return response.json()
@@ -29,24 +29,26 @@ function currentWeather(name) {
     let icon = "https://openweathermap.org/img/w/" + result.weather[0].icon + ".png";
     renderPastSearches();
 
-    // let currentTime = moment().format(result.dt)
-    // console.log(currentTime)
+    let currentTimeUnix = result.dt;
+    let timeOffset = result.timezone / 360;
+    let currentTime = moment.unix(currentTimeUnix).utc().utcOffset(timeOffset);
+    console.log(currentTime);
 
     let currentWeatherHtml = `
     <div>
     <div class="col" id="city-name">
-      <span id="place" class="align-middle">${result.name}
+      <span id="place" class="align-middle">${result.name} ${currentTime._d}
       </span>
       <img id="weather-icon" src="${icon}" alt="weather-icon">
     </div>
     <div class="col">
-      <p id="temperature"></p>
+      <p id="temperature">Temperature: ${result.main.temp} F</p>
     </div>
     <div class="col">
-      <p id="humidity">Humidity: Example</p>
+      <p id="humidity">Humidity: ${result.main.humidity}%</p>
     </div>
     <div class="col">
-      <p id="wind">Wind Speed: Example</p>
+      <p id="wind">Wind Speed: ${result.wind.speed} mph</p>
     </div>
   </div>`;
 
