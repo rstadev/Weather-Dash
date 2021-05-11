@@ -16,7 +16,7 @@ function currentWeather(name) {
   //   // var person = $(this).attr("data-person");
   let city = name;
   // console.log(city)
-  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
+  let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
     name + "&units=imperial" + "&appid=" + APIkey;
   fetch(queryURL)
   .then((response) => {
@@ -24,6 +24,7 @@ function currentWeather(name) {
   })
   .then(result => {
     console.log(result);
+    forecastWeather(name);
     //adds to local storage
     saveInput(city);
     let icon = "https://openweathermap.org/img/w/" + result.weather[0].icon + ".png";
@@ -59,10 +60,19 @@ function currentWeather(name) {
   });
 };
 
-// function captureSearch(event) {
-//   event.preventDefault();
+function forecastWeather(name) {
 
-// };
+  let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" +
+  name + "&units=imperial" + "&appid=" + APIkey;
+  fetch(queryURL)
+  .then((response) => {
+    return response.json()
+  })
+  .then(result => {
+    console.log(result);
+  });
+};
+
 
 function saveInput (city) {
   localStorage.setItem(localStorage.length, city);
