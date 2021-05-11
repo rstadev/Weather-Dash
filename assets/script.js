@@ -10,34 +10,33 @@ let cityUV = document.getElementById("uv-index");
 let APIkey = "8b52d118218ada38037edf0b7f02292b";
 
 
-function currentWeather(cityname) {
+function currentWeather(name) {
   // $(searchButton).on("click", function () {
   //   // var person = $(this).attr("data-person");
-  //   var queryURL = "api.openweathermap.org/data/2.5/weather?q=" +
-  //     cityname + "&appid=" + APIkey;
-
-  //   $.ajax({
-  //     url: queryURL,
-  //     method: "GET"
-  //   })
-  //     .then(function (response) {
-  //       var results = response.data;
-  //       console.log(response);
-  //       console.log(results);
-  //     }
-  // )}
-  // );
-
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
+    name + "&appid=" + APIkey;
+  fetch(queryURL)
+  .then((response) => {
+    return response.json()
+  })
+  .then(result => {
+    console.log(result);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 };
 
 // function captureSearch(event) {
 //   event.preventDefault();
-  
+
 // };
 
 
 $(searchButton).on("click", function (event) {
   // var person = $(this).attr("data-person");
   event.preventDefault();
-  console.log(searchForm.value)
+  let userSearch = searchForm.value.trim();
+  console.log(userSearch);
+  currentWeather(userSearch);
 });
