@@ -1,12 +1,13 @@
 let searchForm = document.getElementById("city-search");
 let searchButton = document.getElementById("search-button");
-let currentWeatherInfo= document.getElementById("current-weather-info")
+let currentWeatherInfo = document.getElementById("current-weather-info")
 let cityName = document.getElementById("place");
 let cityTemp = document.getElementById("temperature");
 let cityHumid = document.getElementById("humidity");
 let cityWind = document.getElementById("wind");
 let cityUV = document.getElementById("uv-index");
 let pastSearchesField = document.getElementById("past-search-field")
+let forecastCards = document.getElementById("forecast-cards")
 
 let APIkey = "8b52d118218ada38037edf0b7f02292b";
 
@@ -19,26 +20,27 @@ function currentWeather(name) {
   let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
     name + "&units=imperial" + "&appid=" + APIkey;
   fetch(queryURL)
-  .then((response) => {
-    return response.json()
-  })
-  .then(result => {
-    console.log(result);
-    forecastWeather(name);
-    //adds to local storage
-    saveInput(city);
-    let icon = "https://openweathermap.org/img/w/" + result.weather[0].icon + ".png";
-    renderPastSearches();
+    .then((response) => {
+      return response.json()
+    })
+    .then(result => {
+      console.log(result);
+      forecastWeather(name);
+      //adds to local storage
+      saveInput(city);
+      let icon = "https://openweathermap.org/img/w/" + result.weather[0].icon + ".png";
+      renderPastSearches();
 
-    let currentTimeUnix = result.dt;
-    let timeOffset = result.timezone / 360;
-    let currentTime = moment.unix(currentTimeUnix).utc().utcOffset(timeOffset);
-    console.log(currentTime);
+      let currentTimeUnix = result.dt;
+      // let timeOffset = result.timezone;
+      let currentTime = moment.unix(currentTimeUnix);
+      // let currentTime = currentTimeObj
+      console.log(currentTime);
 
-    let currentWeatherHtml = `
+      let currentWeatherHtml = `
     <div>
     <div class="col" id="city-name">
-      <span id="place" class="align-middle">${result.name} ${currentTime._d}
+      <span id="place" class="align-middle">${result.name} ${currentTime.format("(MM/DD/YY HH:mm:ss)")}
       </span>
       <img id="weather-icon" src="${icon}" alt="weather-icon">
     </div>
@@ -53,32 +55,52 @@ function currentWeather(name) {
     </div>
   </div>`;
 
-    $(currentWeatherInfo).html(currentWeatherHtml);
-  })
-  .catch(error => {
-    console.log(error);
-  });
+      $(currentWeatherInfo).html(currentWeatherHtml);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 function forecastWeather(name) {
 
   let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" +
-  name + "&units=imperial" + "&appid=" + APIkey;
+    name + "&units=imperial" + "&appid=" + APIkey;
   fetch(queryURL)
-  .then((response) => {
-    return response.json()
-  })
-  .then(result => {
-    console.log(result);
-  });
+    .then((response) => {
+      return response.json()
+    })
+    .then(result => {
+      console.log(result);
+
+
+
+      
+      for (let i = 0; i < result.list.length; i++) {
+        let day = result.list[i]
+        let icon = "https://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
+        let currentTimeUnix = result.dt;
+        let timeOffset = result.timezone / 360;
+        let currentTime = moment.unix(currentTimeUnix).utc().utcOffset(timeOffset);
+        let forecastWeatherHtml = `
+    <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+    <div class="card-header">Header</div>
+    <div class="card-body">
+      <h5 class="card-title">Primary card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+        card's content.</p>
+    </div>
+  </div>`
+      }
+    });
 };
 
 
-function saveInput (city) {
+function saveInput(city) {
   localStorage.setItem(localStorage.length, city);
 };
 
-function renderPastSearches () {
+function renderPastSearches() {
   $(pastSearchesField).empty();
 
   for (let i = 0; i < localStorage.length; i++) {
