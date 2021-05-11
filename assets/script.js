@@ -6,6 +6,7 @@ let cityTemp = document.getElementById("temperature");
 let cityHumid = document.getElementById("humidity");
 let cityWind = document.getElementById("wind");
 let cityUV = document.getElementById("uv-index");
+let pastSearchesField = document.getElementById("past-search-field")
 
 let APIkey = "8b52d118218ada38037edf0b7f02292b";
 
@@ -25,7 +26,9 @@ function currentWeather(name) {
     console.log(result);
     //adds to local storage
     saveInput(city);
-    
+    let icon = "https://openweathermap.org/img/w/" + result.weather[0].icon + ".png";
+    renderPastSearches();
+
   })
   .catch(error => {
     console.log(error);
@@ -38,8 +41,18 @@ function currentWeather(name) {
 // };
 
 function saveInput (city) {
-  localStorage.setItem(localStorage.length, city)
+  localStorage.setItem(localStorage.length, city);
 };
+
+function renderPastSearches () {
+  $(pastSearchesField).empty();
+
+  for (let i = 0; i < localStorage.length; i++) {
+    let pastCity = localStorage.getItem(i);
+    let cityButton = `<a href="#" class="list-group-item list-group-item-action">${pastCity}</a>`;
+    $(pastSearchesField).prepend(cityButton);
+  }
+}
 
 
 $(searchButton).on("click", function (event) {
@@ -49,3 +62,5 @@ $(searchButton).on("click", function (event) {
   console.log(userSearch);
   currentWeather(userSearch);
 });
+
+renderPastSearches();
