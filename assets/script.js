@@ -13,6 +13,8 @@ let APIkey = "8b52d118218ada38037edf0b7f02292b";
 function currentWeather(name) {
   // $(searchButton).on("click", function () {
   //   // var person = $(this).attr("data-person");
+  let city = name;
+  // console.log(city)
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
     name + "&appid=" + APIkey;
   fetch(queryURL)
@@ -21,9 +23,12 @@ function currentWeather(name) {
   })
   .then(result => {
     console.log(result);
+    //adds to local storage
+    saveInput(city);
+    
   })
   .catch(error => {
-    console.error('Error:', error);
+    console.log(error);
   });
 };
 
@@ -31,6 +36,10 @@ function currentWeather(name) {
 //   event.preventDefault();
 
 // };
+
+function saveInput (city) {
+  localStorage.setItem(localStorage.length, city)
+};
 
 
 $(searchButton).on("click", function (event) {
