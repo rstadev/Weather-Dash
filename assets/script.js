@@ -11,21 +11,33 @@ let APIkey = "8b52d118218ada38037edf0b7f02292b";
 
 
 function currentWeather(cityname) {
-  $(searchButton).on("click", function () {
-    // var person = $(this).attr("data-person");
-    var queryURL = "api.openweathermap.org/data/2.5/weather?q=" +
-      cityname + "&appid=" + APIkey;
+  // $(searchButton).on("click", function () {
+  //   // var person = $(this).attr("data-person");
+  //   var queryURL = "api.openweathermap.org/data/2.5/weather?q=" +
+  //     cityname + "&appid=" + APIkey;
 
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    })
-      .then(function (response) {
-        var results = response.data;
-        console.log(response);
-        console.log(results);
-      }
-  )}
-  );
+  //   $.ajax({
+  //     url: queryURL,
+  //     method: "GET"
+  //   })
+  //     .then(function (response) {
+  //       var results = response.data;
+  //       console.log(response);
+  //       console.log(results);
+  //     }
+  // )}
+  // );
 
-}
+};
+
+// function captureSearch(event) {
+//   event.preventDefault();
+  
+// };
+
+
+$(searchButton).on("click", function (event) {
+  // var person = $(this).attr("data-person");
+  event.preventDefault();
+  console.log(searchForm.value)
+});
