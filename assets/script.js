@@ -78,9 +78,14 @@ function renderPastSearches () {
   }
 }
 
+$(pastSearchesField).on("click", function (event) {
+  event.preventDefault();
+  $(searchForm).val(event.target.textContent)
+  let reSearch = searchForm.value.trim();
+  currentWeather(reSearch);
+});
 
 $(searchButton).on("click", function (event) {
-  // var person = $(this).attr("data-person");
   event.preventDefault();
   let userSearch = searchForm.value.trim();
   console.log(userSearch);
