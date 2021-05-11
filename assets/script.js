@@ -1,6 +1,6 @@
 let searchForm = document.getElementById("city-search");
 let searchButton = document.getElementById("search-button");
-// let currentWeather= document.querySelector("current-weather-info")
+let currentWeatherInfo= document.getElementById("current-weather-info")
 let cityName = document.getElementById("place");
 let cityTemp = document.getElementById("temperature");
 let cityHumid = document.getElementById("humidity");
@@ -29,6 +29,28 @@ function currentWeather(name) {
     let icon = "https://openweathermap.org/img/w/" + result.weather[0].icon + ".png";
     renderPastSearches();
 
+    // let currentTime = moment().format(result.dt)
+    // console.log(currentTime)
+
+    let currentWeatherHtml = `
+    <div>
+    <div class="col" id="city-name">
+      <span id="place" class="align-middle">${result.name}
+      </span>
+      <img id="weather-icon" src="${icon}" alt="weather-icon">
+    </div>
+    <div class="col">
+      <p id="temperature"></p>
+    </div>
+    <div class="col">
+      <p id="humidity">Humidity: Example</p>
+    </div>
+    <div class="col">
+      <p id="wind">Wind Speed: Example</p>
+    </div>
+  </div>`;
+
+    $(currentWeatherInfo).html(currentWeatherHtml);
   })
   .catch(error => {
     console.log(error);
