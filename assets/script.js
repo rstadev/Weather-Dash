@@ -78,23 +78,25 @@ function forecastWeather(name) {
         let day = result.list[i]
         let icon = "https://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
         let currentTimeUnix = day.dt;
-        
+        console.log(icon)
         let currentTime = moment.unix(currentTimeUnix);
         console.log(currentTime.format("HH:mm:ss"));
         if (currentTime.format("HH:mm:ss") == "12:00:00") {
 
-        forecastWeatherHtml += `
+          forecastWeatherHtml += `
     <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
     <div class="card-header">${currentTime.format("(MM/DD/YY)")}</div>
     <div class="card-body">
-      <h5 class="card-title">${icon}</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-        card's content.</p>
+      <ul class= "list-unstyled">
+        <li class="card-text"><img src="${icon}"></li>
+        <li class="card-text">${day.main.temp} F</li>
+        <li class="card-text">${day.main.humidity} %</li>
+      </ul>
     </div>
   </div>`
 
-}
-// console.log(forecastWeatherHtml)
+        }
+        // console.log(forecastWeatherHtml)
         $(forecastCards).html(forecastWeatherHtml);
       }
     })
