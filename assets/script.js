@@ -32,9 +32,7 @@ function currentWeather(name) {
       renderPastSearches();
 
       let currentTimeUnix = result.dt;
-      // let timeOffset = result.timezone;
       let currentTime = moment.unix(currentTimeUnix);
-      // let currentTime = currentTimeObj
       console.log(currentTime);
 
       let currentWeatherHtml = `
@@ -72,26 +70,35 @@ function forecastWeather(name) {
     })
     .then(result => {
       console.log(result);
+      let forecastWeatherHtml = "";
 
 
 
-      
       for (let i = 0; i < result.list.length; i++) {
         let day = result.list[i]
         let icon = "https://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
-        let currentTimeUnix = result.dt;
-        let timeOffset = result.timezone / 360;
-        let currentTime = moment.unix(currentTimeUnix).utc().utcOffset(timeOffset);
-        let forecastWeatherHtml = `
+        let currentTimeUnix = day.dt;
+        
+        let currentTime = moment.unix(currentTimeUnix);
+        // if (currentTime.format("HH:mm:ss") == "13:00:00") {
+
+        forecastWeatherHtml += `
     <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-    <div class="card-header">Header</div>
+    <div class="card-header">${currentTime.format("(MM/DD/YY)")}</div>
     <div class="card-body">
-      <h5 class="card-title">Primary card title</h5>
+      <h5 class="card-title">${icon}</h5>
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
         card's content.</p>
     </div>
   </div>`
+
+  console.log(forecastWeatherHtml)
+        // }
       }
+      $(forecastCards).html(forecastWeatherHtml);
+    })
+    .catch(error => {
+      console.log(error);
     });
 };
 
