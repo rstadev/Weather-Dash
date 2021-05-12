@@ -70,7 +70,7 @@ function forecastWeather(name) {
     })
     .then(result => {
       console.log(result);
-      let forecastWeatherHtml = "";
+      let forecastWeatherHtml = `<div></div>`;
 
 
 
@@ -80,7 +80,8 @@ function forecastWeather(name) {
         let currentTimeUnix = day.dt;
         
         let currentTime = moment.unix(currentTimeUnix);
-        // if (currentTime.format("HH:mm:ss") == "13:00:00") {
+        console.log(currentTime.format("HH:mm:ss"));
+        if (currentTime.format("HH:mm:ss") == "12:00:00") {
 
         forecastWeatherHtml += `
     <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
@@ -92,10 +93,10 @@ function forecastWeather(name) {
     </div>
   </div>`
 
-  console.log(forecastWeatherHtml)
-        // }
+}
+// console.log(forecastWeatherHtml)
+        $(forecastCards).html(forecastWeatherHtml);
       }
-      $(forecastCards).html(forecastWeatherHtml);
     })
     .catch(error => {
       console.log(error);
