@@ -30,7 +30,7 @@
 
 
   ## Usage
-  To use this project, simply follow the deployed link here: 
+  To use this project, simply follow the deployed link here: https://rstadev.github.io/Weather-Dash/
   <br>
 
   ## License
